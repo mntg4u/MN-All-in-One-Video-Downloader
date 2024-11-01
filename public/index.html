@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Video Downloader</title>
+    <style>
+        /* Background animation */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #fbc2eb, #a18cd1);
+            background-size: 200% 200%;
+            animation: gradientBackground 10s ease infinite;
+            color: #333;
+        }
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            color: #333;
+        }
+        .result a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .result a:hover {
+            text-decoration: underline;
+        }
+        .info {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MN-All in One Video Downloader 🚀</h1>
+    <p>Effortlessly download videos from a wide array of platforms including YouTube, Spotify, TeraBox, Facebook, and more!</p>
+    <input type="text" id="videoUrl" placeholder="Enter video URL here">
+    <button onclick="downloadVideo()">Download</button>
+    
+    <div class="result" id="result"></div>
+
+    <div class="info">
+        <p>For support, contact: <a href="https://t.me/MNBOTS_SUPPORT" target="_blank">MNBOTS SUPPORT GROUP</a></p>
+      
+    </div>
+</div>
+
+<script>
+    async function downloadVideo() {
+        const videoUrl = document.getElementById('videoUrl').value;
+        const resultDiv = document.getElementById('result');
+        
+        if (!videoUrl) {
+            resultDiv.innerHTML = "<p>Please enter a valid video URL.</p>";
+            return;
+        }
+
+        resultDiv.innerHTML = "<p>Loading...</p>";
+
+        try {
+            const response = await fetch(`/api/download?url=${encodeURIComponent(videoUrl)}`);
+            const data = await response.json();
+            
+            if (data.download_url) {
+                resultDiv.innerHTML = `
+                    <p>Download Link: <a href="${data.download_url}" target="_blank">Click here to download</a></p>
+                    <p>Developer: <a href="https://t.me/MrMNTG" target="_blank">MN-TG</a></p>
+                `;
+            } else {
+                resultDiv.innerHTML = "<p>Could not fetch download link. Please try again.</p>";
+            }
+        } catch (error) {
+            resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+        }
+    }
+</script>
+
+</body>
+</html>
